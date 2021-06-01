@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace RestDemo
@@ -84,14 +85,14 @@ namespace RestDemo
                          = new AuthenticationHeaderValue("Bearer", AccessToken);
             }
 
-            var parameters = new Dictionary<string, string>();
-            parameters["data1"] = data1;
+            string data = "{ \"data\" : \"" + data1 + "\"}";
 
-            var response = client.DeleteAsync(endPoint).Result;
-            var contents = response.Content.ReadAsStringAsync().Result;
+            var result = client.SendAsync(new HttpRequestMessage(HttpMethod.Delete, endPoint)
+                        {
+                            Content = new StringContent(data, Encoding.UTF8, "application/json")
+                         }).Result;
 
-            return contents;
+            return result.Content.ReadAsStringAsync().Result; // RequestMessage.ToString();
         }
-
     }
 }

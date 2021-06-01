@@ -81,6 +81,7 @@ namespace RestDemo
 
             rClient.endPoint = txtUrl.Text;
             rClient.AccessToken = "123456789";
+            rClient.data1 = "Hola Mundo!";
 
             string strResponse = string.Empty;
 
